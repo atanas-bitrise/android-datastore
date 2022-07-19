@@ -1,4 +1,4 @@
-package io.bitrise.sample.android
+package com.codelab.android.datastore.data
 
 import org.junit.Test
 import org.junit.Rule
