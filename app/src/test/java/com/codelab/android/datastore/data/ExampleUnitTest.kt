@@ -11,6 +11,7 @@ import java.io.FileInputStream
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import com.codelab.android.datastore.UserPreferences
+import com.codelab.android.datastore.data.UserPreferencesSerializer
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -33,13 +34,15 @@ class ExampleUnitTest {
         val file = temporaryFolder.newFile()
         val outputStream = FileOutputStream(file)
         
-        outputStream.write(42)
+        val stub = UserPreferences.getDefaultInstance()
+        
+        UserPreferencesSerializer.getDefaultInstance().writeTo(stub, outputStream)
         outputStream.close()
         
         val inputStream = FileInputStream(file)
-        val readValue = inputStream.read()
+        val readValue = UserPreferencesSerializer.getDefaultInstance().readFrom(inputStream)
         inputStream.close()
         
-        assertEquals(42, readValue)
+        assertEquals(stub, readValue)
     }
 }
