@@ -13,6 +13,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import com.codelab.android.datastore.UserPreferences
 import com.codelab.android.datastore.data.UserPreferencesSerializer
 
+import kotlinx.coroutines.test.runTest
+
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
@@ -29,20 +31,20 @@ class ExampleUnitTest {
     }
     
     @Test
-    fun temporaryFolder_isCreated() {
-        val directory = temporaryFolder.newFolder()
-        val file = temporaryFolder.newFile()
+    fun temporaryFolder_isCreated() = runTest {
+        val file = temporaryFolder.newFile("test.txt")
         val outputStream = FileOutputStream(file)
         
-        val stub = UserPreferences.getDefaultInstance()
+        val stub = UserPreferences.newBuilder().build()
+        val wrong = UserPreferences.newBuilder().setShowCompleted(false).build()
+        UserPreferencesSerializer.writeTo(stub, outputStream)
         
-        UserPreferencesSerializer.getDefaultInstance().writeTo(stub, outputStream)
         outputStream.close()
         
         val inputStream = FileInputStream(file)
-        val readValue = UserPreferencesSerializer.getDefaultInstance().readFrom(inputStream)
+        val readValue = UserPreferencesSerializer.readFrom(inputStream)
         inputStream.close()
         
-        assertEquals(stub, readValue)
+        assertEquals(wrong, readValue)
     }
 }
