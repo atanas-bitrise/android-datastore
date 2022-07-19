@@ -10,6 +10,8 @@ import java.io.FileOutputStream
 import java.io.FileInputStream
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+import com.codelab.android.datastore.UserPreferences
+
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
