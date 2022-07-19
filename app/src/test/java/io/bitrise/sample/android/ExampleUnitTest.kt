@@ -28,11 +28,15 @@ class ExampleUnitTest {
     fun temporaryFolder_isCreated() {
         val directory = temporaryFolder.newFolder()
         val file = temporaryFolder.newFile()
-        val inputStream = FileOutputStream(file)
+        val outputStream = FileOutputStream(file)
         
-        inputStream.write(42)
+        outputStream.write(42)
+        outputStream.close()
+        
+        val inputStream = FileInputStream(file)
+        val readValue = inputStream.read()
         inputStream.close()
         
-        assertEquals(42, 41+1)
+        assertEquals(42, readValue)
     }
 }
