@@ -7,6 +7,7 @@ import org.junit.Assert.*
 
 import java.io.File
 import java.io.FileOutputStream
+import java.io.FileInputStream
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /**
