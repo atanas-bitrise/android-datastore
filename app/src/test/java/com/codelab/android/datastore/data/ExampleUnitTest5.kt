@@ -31,7 +31,7 @@ class ExampleUnitTest5 {
     }
     
     fun temporaryFolder_run() = runTest {
-        val file = temporaryFolder.newFile("test.txt")
+        val file = temporaryFolder.newFile()
         val outputStream = FileOutputStream(file)
         
         val stub = UserPreferences.newBuilder().build()
