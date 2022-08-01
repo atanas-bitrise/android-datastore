@@ -27,7 +27,7 @@ class ExampleUnitTest5 {
 
     @get:Rule val temporaryFolder = TemporaryFolder()
 
-    var file: File? = null
+    lateinit var file: File
 
     @Before
     fun init() {
@@ -36,7 +36,7 @@ class ExampleUnitTest5 {
 
     @After
     fun teardown() {
-        file?.delete()
+        file.delete()
     }
     
     fun temporaryFolder_run() = runTest {
