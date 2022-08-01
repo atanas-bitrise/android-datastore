@@ -2,6 +2,8 @@ package com.codelab.android.datastore.data
 
 import org.junit.Test
 import org.junit.Rule
+import org.junit.Before
+import org.junit.After
 import org.junit.rules.*
 import org.junit.Assert.*
 
@@ -25,17 +27,22 @@ class ExampleUnitTest6 {
 
     @get:Rule val temporaryFolder = TemporaryFolder()
 
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    var file: File? = null
+
+    @Before
+    fun init() {
+        file = temporaryFolder.newFile()
+    }
+
+    @After
+    fun teardown() {
+        file?.delete()
     }
     
     fun temporaryFolder_run() = runTest {
-        val file = temporaryFolder.newFile()
         val outputStream = FileOutputStream(file)
         
         val stub = UserPreferences.newBuilder().build()
-        val wrong = UserPreferences.newBuilder().setShowCompleted(false).build()
         UserPreferencesSerializer.writeTo(stub, outputStream)
         
         outputStream.close()
@@ -44,7 +51,7 @@ class ExampleUnitTest6 {
         val readValue = UserPreferencesSerializer.readFrom(inputStream)
         inputStream.close()
         
-        assertEquals(wrong, readValue)
+        assertEquals(stub, readValue)
     }
     
     @Test fun temporaryFolderRun1() = temporaryFolder_run()
